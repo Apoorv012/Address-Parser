@@ -26,8 +26,7 @@ logging.basicConfig(
     ]
 )
 
-# --- 1. Pydantic Models for Request and Response ---
-
+# --- Pydantic Models for Request and Response ---
 class AddressRequest(BaseModel):
     """Request model for the raw address string."""
     raw_address: str | None = None
@@ -45,13 +44,12 @@ class ParsedAddress(BaseModel):
     state: str | None = None
     pincode: str | None = None
 
-# --- 2. Application Setup ---
 
-# Create the FastAPI app instance
+# --- Application Setup ---
 app = FastAPI(
     title="Address Parser API",
-    description="An API to parse raw Indian addresses into structured components using a custom spaCy NER model.",
-    version="1.0.0",
+    description="An API to parse raw Indian addresses using a hybrid spaCy model.",
+    version="2.0.0", # Version updated for new architecture
 )
 
 
@@ -60,15 +58,17 @@ app = FastAPI(
 # Define the path to the saved model
 MODEL_DIR = Path("./address_parser_model")
 
-# Load the trained spaCy model from disk
+# --- Load the spaCy Model ---
 nlp = None
 try:
+    # Need to import the custom component so spaCy knows about it when loading
+    from pincode_centric_parser import PincodeCentricParser
     logging.info(f"Loading model from {settings.model_dir}...")
     nlp = spacy.load(settings.model_dir)
     logging.info("Model loaded successfully.")
-except OSError:
-    logging.error(f"Could not find model at {settings.model_dir}.")
-    logging.warning("Please train the model, and save the model first.")
+except (OSError, ImportError) as e:
+    logging.error(f"Could not load model: {e}")
+    logging.warning("Please ensure 'pincode_centric_parser.py' exists and the model is trained.")
     # The app will run but the /parse endpoint will fail gracefully.
 
 
@@ -76,40 +76,45 @@ except OSError:
 @app.post("/parse", response_model=ParsedAddress, tags=["Parsing the address"])
 async def parse_address(request: AddressRequest):
     """
-    Parses a raw address string and returns its components.
+    Parses a raw address string and returns its components, enriched with knowledge base data.
     """
     logging.info(f"Received request to parse address: '{request.raw_address}'")
 
     # if raw_address is not present, respond accordingly
     if not request.raw_address or not request.raw_address.strip():
         logging.warning("Validation error: 'raw_address' field is empty.")
-        raise HTTPException(
-            status_code=422,
-            detail="The 'raw_address' field cannot be an empty string."
-        )
+        raise HTTPException(status_code=422, detail="The 'raw_address' field cannot be an empty string.")
 
     if nlp is None:
         logging.error("Attempted to use /parse endpoint but model is not loaded.")
-        raise HTTPException(
-            status_code=503, 
-            detail="Model is not loaded. Please ensure the model is trained and available."
-        )
+        raise HTTPException(status_code=503, detail="Model is not loaded. Please ensure the model is trained and available.")
+
 
     # Process the raw address with the loaded spaCy model
     doc = nlp(request.raw_address)
 
-    # Use a dictionary to collect entities, handling multiple matches by taking the first one
+    # Create a dictionary to collect all entities.
     parsed_data = {}
+
+    # 1. Get entities found by the pipeline (both rule-based and statistical)
     for ent in doc.ents:
         label = ent.label_.lower()
-        if label not in parsed_data: # Only take the first entity for a given label
+        if label not in parsed_data:
             parsed_data[label] = ent.text
 
-    logging.info(f"Successfully parsed address. Result: {parsed_data}")
+    # 2. Enrich the results with data from the knowledge base, if available
+    if doc._.kb_info:
+        kb_data = doc._.kb_info
+        logging.info(f"Enriching response with Knowledge Base data: {kb_data}")
+        # Fill in any fields that were NOT found in the text but are in our DB
+        if not parsed_data.get('pincode'): parsed_data['pincode'] = kb_data.get('pincode')
+        if not parsed_data.get('state'): parsed_data['state'] = kb_data.get('state')
+        if not parsed_data.get('district'): parsed_data['district'] = kb_data.get('district')
+        # Assume city is the same as district for enrichment purposes
+        if not parsed_data.get('city'): parsed_data['city'] = kb_data.get('district') 
 
-    # Create the response object using the Pydantic model
+    logging.info(f"Successfully parsed address. Final Result: {parsed_data}")
     response = ParsedAddress(**parsed_data)
-
     return response
 
 

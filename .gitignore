@@ -108,4 +108,4 @@ venv.bak/
 .idea/*
 
 # Ignore the model zip
-address_parser_model.zip
+address_parser_model*.zip

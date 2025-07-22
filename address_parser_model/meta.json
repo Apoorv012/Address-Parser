@@ -18,22 +18,18 @@
   },
   "labels":{
     "ner":[
-      "CITY",
-      "DISTRICT",
       "HOUSE_NUMBER",
       "LOCALITY",
-      "PINCODE",
       "POI",
-      "ROAD",
-      "STATE",
-      "SUBLOCALITY",
-      "SUB_DISTRICT"
+      "ROAD"
     ]
   },
   "pipeline":[
+    "pincode_centric_parser",
     "ner"
   ],
   "components":[
+    "pincode_centric_parser",
     "ner"
   ],
   "disabled":[

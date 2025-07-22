@@ -8,7 +8,7 @@ This project provides a simple API to parse raw Indian addresses into structured
 .
 ├── address_parser_model/   <-- This is the spacy model
 ├── .env                    <-- Your environment configuration file
-├── api.py                 <-- The FastAPI application
+├── api.py                  <-- The FastAPI application
 └── requirements.txt        <-- Python dependencies
 ```
 

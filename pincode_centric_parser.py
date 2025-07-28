@@ -14,15 +14,16 @@ def clean_office_name(name):
 
 
 class PincodeCentricParser:
-    def __init__(self, nlp, name, csv_path):
+    def __init__(self, nlp, name, pincode_dataset_path, cities_dataset_path):
         self.name = name
-        self.pincode_db, self.locality_db = self._load_databases(csv_path)
+        self.pincode_db, self.locality_db = self._load_pincode_database(pincode_dataset_path)
+        self.cities_db = self._load_cities_database(cities_dataset_path)
         if not Doc.has_extension("kb_info"): Doc.set_extension("kb_info", default=None)
 
-    def _load_databases(self, csv_path):
-        print(f"Loading knowledge base from {csv_path}...")
+    def _load_pincode_database(self, pincode_dataset_path):
+        print(f"Loading knowledge base from {pincode_dataset_path}...")
         try:
-            df = pd.read_csv(csv_path, low_memory=False)
+            df = pd.read_csv(pincode_dataset_path, low_memory=False)
             df.dropna(subset=['pincode', 'officename', 'district', 'statename'], inplace=True)
             
             # NEW: Convert relevant columns to Title Case
@@ -51,8 +52,29 @@ class PincodeCentricParser:
             print("Knowledge base loaded successfully.")
             return pincode_db, locality_db
         except FileNotFoundError:
-            print(f"Error: Pincode CSV not found at {csv_path}. The parser will be limited.")
+            print(f"Error: Pincode CSV not found at {pincode_dataset_path}. The parser will be limited.")
             return {}, {}
+
+    def _load_cities_database(self, cities_dataset_path):
+        print(f"Loading knowledge base from {cities_dataset_path}...")
+        try:
+            df = pd.read_csv(cities_dataset_path, low_memory=False)
+            df.dropna(inplace=True)
+            
+            # NEW: Convert relevant columns to Title Case
+            df['State/UT'] = df['State/UT'].str.title()
+            df['City/Town'] = df['City/Town'].str.title()
+
+            cities_db = {}
+            for _, row in df.iterrows():
+                state = row['State/UT']
+                city = row['City/Town']
+                cities_db[city] = state
+            print("Knowledge base loaded successfully.")
+            return cities_db
+        except FileNotFoundError:
+            print(f"Error: Cities CSV not found at {cities_dataset_path}. The parser will be limited.")
+            return {}
 
     def _find_pincode(self, doc):
         match = re.search(r'\b(\d{6})\b', doc.text)
@@ -117,12 +139,15 @@ class PincodeCentricParser:
         doc.ents = spacy.util.filter_spans(ents)
         return doc
     
-@Language.factory("pincode_centric_parser", default_config={"csv_path": None})
-def create_pincode_parser(nlp: Language, name: str, csv_path: str):
+@Language.factory("pincode_centric_parser", default_config={"pincode_dataset_path": None, "cities_dataset_path": None})
+def create_pincode_parser(nlp: Language, name: str, pincode_dataset_path: str, cities_dataset_path: str):
     """
     This factory function tells spaCy how to build the PincodeCentricParser component.
-    It takes the 'csv_path' from the config and passes it to the class.
+    It takes the 'pincode_dataset_path' and 'cities_dataset_path' from the config and passes it to the class.
     """
-    if csv_path is None:
-        raise ValueError("The 'csv_path' for the pincode parser is not set in the config.")
-    return PincodeCentricParser(nlp, name, csv_path)
+    if pincode_dataset_path is None:
+        raise ValueError("The 'pincode_dataset_path' for the pincode parser is not set in the config.")
+    if cities_dataset_path is None:
+        raise ValueError("The 'cities_dataset_path' for the pincode parser is not set in the config.")
+
+    return PincodeCentricParser(nlp, name, pincode_dataset_path, cities_dataset_path)

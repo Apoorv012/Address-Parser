@@ -15,14 +15,14 @@ NER_TRAIN_DATA = [
     ("Khasra No. 14/2, Village Ghitorni, Tehsil Vasant Vihar", {"entities": [(0, 15, "HOUSE_NUMBER")]}),
 ]
 
-def build_and_train_hybrid_pipeline(csv_path, training_data, output_dir, iterations=30):
+def build_and_train_hybrid_pipeline(pincode_dataset_path, cities_dataset_path, training_data, output_dir, iterations=30):
     """Builds a hybrid pipeline and trains the NER component."""
     output_path = Path(output_dir)
     if not output_path.exists():
         output_path.mkdir()
 
     nlp = spacy.blank("en")
-    nlp.add_pipe("pincode_centric_parser", config={"csv_path": csv_path})
+    nlp.add_pipe("pincode_centric_parser", config={"pincode_dataset_path": pincode_dataset_path, "cities_dataset_path": cities_dataset_path})
     ner = nlp.add_pipe("ner")
 
     for _, annotations in training_data:
@@ -53,7 +53,8 @@ def build_and_train_hybrid_pipeline(csv_path, training_data, output_dir, iterati
 
 if __name__ == '__main__':
     # --- Configuration ---
-    CSV_FILE_PATH = 'pincode_dataset.csv'
+    PINCODE_DATASET_FILE_PATH = 'pincode_dataset.csv'
+    CITIES_DATASET_FILE_PATH = 'indian_cities.csv'
     MODEL_OUTPUT_DIR = "./address_parser_model"
 
-    build_and_train_hybrid_pipeline(CSV_FILE_PATH, NER_TRAIN_DATA, MODEL_OUTPUT_DIR)
+    build_and_train_hybrid_pipeline(PINCODE_DATASET_FILE_PATH, CITIES_DATASET_FILE_PATH, NER_TRAIN_DATA, MODEL_OUTPUT_DIR)

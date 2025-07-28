@@ -53,11 +53,6 @@ app = FastAPI(
 )
 
 
-# Load the spaCy Model ---
-
-# Define the path to the saved model
-MODEL_DIR = Path("./address_parser_model")
-
 # --- Load the spaCy Model ---
 nlp = None
 try:

@@ -33,6 +33,7 @@ class AddressRequest(BaseModel):
 
 class ParsedAddress(BaseModel):
     """Response model for the structured address components."""
+    care_of: str | None = None
     house_number: str | None = None
     poi: str | None = None
     road: str | None = None

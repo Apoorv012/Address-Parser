@@ -69,15 +69,22 @@ class PincodeCentricParser:
         if pincode and pincode in self.pincode_db:
             known_details = self.pincode_db[pincode]
             doc._.kb_info = {**known_details, "pincode": pincode}
-            ents.append(pincode_span)
+            if pincode_span:
+                ents.append(pincode_span)
             for label, text_to_find in [("STATE", known_details['state']), ("DISTRICT", known_details['district']), ("CITY", known_details['district'])]:
                 for match in re.finditer(r'\b' + re.escape(text_to_find) + r'\b', doc.text, re.IGNORECASE):
-                    ents.append(doc.char_span(match.start(), match.end(), label=label))
+                    span = doc.char_span(match.start(), match.end(), label=label)
+                    if span:
+                        ents.append(span)
+
             for locality in known_details['localities']:
                 for match in re.finditer(r'\b' + re.escape(locality) + r'\b', doc.text, re.IGNORECASE):
-                    ents.append(doc.char_span(match.start(), match.end(), label="LOCALITY"))
+                    span = doc.char_span(match.start(), match.end(), label="LOCALITY")
+                    if span:
+                        ents.append(span)
+
         else:
-            # --- *** REFACTORED REVERSE LOOKUP LOGIC *** ---
+            # REVERSE LOOKUP LOGIC
             print("No pincode found. Attempting reverse lookup by locality.")
             for locality_name, possible_details in self.locality_db.items():
                 if not locality_name: continue # Skip empty locality names
@@ -102,10 +109,8 @@ class PincodeCentricParser:
                     if details:
                         print(f"Found known locality: '{locality_name}'. Filling details.")
                         doc._.kb_info = details
-                        ents.append(doc.char_span(match.start(), match.end(), label="LOCALITY"))
-                        ents.append(doc.char_span(match.start(), match.end(), label="STATE"))
-                        ents.append(doc.char_span(match.start(), match.end(), label="DISTRICT"))
-                        ents.append(doc.char_span(match.start(), match.end(), label="CITY"))
+                        span = doc.char_span(match.start(), match.end(), label="LOCALITY")
+                        if span is not None: ents.append(span)
                         break # Found a match, stop searching this locality
                 if doc._.kb_info: break # Found a definitive match, stop all searching
         

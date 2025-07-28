@@ -26,10 +26,12 @@
   },
   "pipeline":[
     "pincode_centric_parser",
+    "cities_state_parser",
     "ner"
   ],
   "components":[
     "pincode_centric_parser",
+    "cities_state_parser",
     "ner"
   ],
   "disabled":[

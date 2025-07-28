@@ -4,6 +4,7 @@ import spacy.lang
 from spacy.training.example import Example
 from pathlib import Path
 from pincode_centric_parser import PincodeCentricParser
+from cities_state_parser import CitiesStateParser
 
 # The format is: (text, {"entities": [(start_char, end_char, LABEL)]})
 # You can use tools like Doccano or Prodigy to annotate more data easily.
@@ -22,7 +23,8 @@ def build_and_train_hybrid_pipeline(pincode_dataset_path, cities_dataset_path, t
         output_path.mkdir()
 
     nlp = spacy.blank("en")
-    nlp.add_pipe("pincode_centric_parser", config={"pincode_dataset_path": pincode_dataset_path, "cities_dataset_path": cities_dataset_path})
+    nlp.add_pipe("pincode_centric_parser", config={"pincode_dataset_path": pincode_dataset_path})
+    nlp.add_pipe("cities_state_parser", config={"cities_dataset_path": cities_dataset_path})
     ner = nlp.add_pipe("ner")
 
     for _, annotations in training_data:

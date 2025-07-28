@@ -38,7 +38,6 @@ class ParsedAddress(BaseModel):
     road: str | None = None
     sublocality: str | None = None
     locality: str | None = None
-    sub_district: str | None = None
     district: str | None = None
     city: str | None = None
     state: str | None = None
@@ -56,14 +55,15 @@ app = FastAPI(
 # --- Load the spaCy Model ---
 nlp = None
 try:
-    # Need to import the custom component so spaCy knows about it when loading
+    # Need to import the custom components so spaCy knows about them when loading
     from pincode_centric_parser import PincodeCentricParser
+    from cities_state_parser import CitiesStateParser
     logging.info(f"Loading model from {settings.model_dir}...")
     nlp = spacy.load(settings.model_dir)
     logging.info("Model loaded successfully.")
 except (OSError, ImportError) as e:
     logging.error(f"Could not load model: {e}")
-    logging.warning("Please ensure 'pincode_centric_parser.py' exists and the model is trained.")
+    logging.warning("Please ensure 'pincode_centric_parser.py' and 'cities_state_parser.py' exist and the model is trained.")
     # The app will run but the /parse endpoint will fail gracefully.
 
 
@@ -105,8 +105,8 @@ async def parse_address(request: AddressRequest):
         if not parsed_data.get('pincode'): parsed_data['pincode'] = kb_data.get('pincode')
         if not parsed_data.get('state'): parsed_data['state'] = kb_data.get('state')
         if not parsed_data.get('district'): parsed_data['district'] = kb_data.get('district')
-        # Assume city is the same as district for enrichment purposes
-        if not parsed_data.get('city'): parsed_data['city'] = kb_data.get('district') 
+        if not parsed_data.get('locality'): parsed_data['locality'] = kb_data.get('locality')
+        if not parsed_data.get('city'): parsed_data['city'] = kb_data.get('city') 
 
     logging.info(f"Successfully parsed address. Final Result: {parsed_data}")
     response = ParsedAddress(**parsed_data)

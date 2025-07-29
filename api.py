@@ -1,3 +1,4 @@
+import re
 import spacy
 import logging
 from fastapi import FastAPI, HTTPException
@@ -62,10 +63,16 @@ try:
     logging.info(f"Loading model from {settings.model_dir}...")
     nlp = spacy.load(settings.model_dir)
     logging.info("Model loaded successfully.")
+    
 except (OSError, ImportError) as e:
     logging.error(f"Could not load model: {e}")
     logging.warning("Please ensure 'pincode_centric_parser.py' and 'cities_state_parser.py' exist and the model is trained.")
     # The app will run but the /parse endpoint will fail gracefully.
+
+
+def preprocess_text(text: str) -> str:
+    # Split things like Delhi-110095 into Delhi 110095
+    return re.sub(r'([a-zA-Z]+)-(\d{6})', r'\1 \2', text)
 
 
 # Parse Address Endpoint
@@ -85,9 +92,10 @@ async def parse_address(request: AddressRequest):
         logging.error("Attempted to use /parse endpoint but model is not loaded.")
         raise HTTPException(status_code=503, detail="Model is not loaded. Please ensure the model is trained and available.")
 
+    text = preprocess_text(request.raw_address)
 
     # Process the raw address with the loaded spaCy model
-    doc = nlp(request.raw_address)
+    doc = nlp(text)
 
     # Create a dictionary to collect all entities.
     parsed_data = {}

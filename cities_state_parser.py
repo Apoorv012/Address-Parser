@@ -1,15 +1,22 @@
 import spacy
 import re
 import pandas as pd
-from spacy.tokens import Doc
+from spacy.tokens import Span, Doc
 from spacy.language import Language
+from spacy.matcher import PhraseMatcher
 
 
 class CitiesStateParser:
     def __init__(self, nlp, name, cities_dataset_path):
         self.name = name
         self.cities_db = self._load_cities_database(cities_dataset_path)
+        self.matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+
         if not Doc.has_extension("kb_info"): Doc.set_extension("kb_info", default=None)
+
+        patterns = [nlp.make_doc(city) for city in self.cities_db]
+        self.matcher.add("CITY", patterns)
+
 
     def _load_cities_database(self, cities_dataset_path):
         print(f"Loading knowledge base from {cities_dataset_path}...")
@@ -17,7 +24,7 @@ class CitiesStateParser:
             df = pd.read_csv(cities_dataset_path, low_memory=False)
             df.dropna(inplace=True)
             
-            # NEW: Convert relevant columns to Title Case
+            # Convert relevant columns to Title Case
             df['State/UT'] = df['State/UT'].str.title()
             df['City/Town'] = df['City/Town'].str.title()
 
@@ -37,9 +44,9 @@ class CitiesStateParser:
         
         # Preserve existing kb_info from previous parsers (like pincode parser)
         existing_kb_info = doc._.kb_info if doc._.kb_info else {}
-        
         # Check if we already have state information from previous parsers
         existing_state = None
+        
         # Check both existing entities and kb_info
         for ent in doc.ents:
             if ent.label_ == "STATE":
@@ -54,19 +61,24 @@ class CitiesStateParser:
         # Find cities in the address
         found_city = None
         found_state = None
-        
-        for city, state in self.cities_db.items():
-            for match in re.finditer(r'\b' + re.escape(city) + r'\b', doc.text, re.IGNORECASE):
-                # Create CITY entity span
-                span = doc.char_span(match.start(), match.end(), label="CITY")
-                if span:
-                    ents.append(span)
-                    found_city = city
-                    found_state = state
-                    print(f"Found city: '{city}' in state: '{state}'")
-                    break  # Found a city, stop searching
-            if found_city:
-                break  # Found a city, stop searching all cities
+
+        print(doc.text)
+        print([token.text for token in doc])
+
+        matches = self.matcher(doc)
+        print('matches:', matches)
+        for match_id, start, end in matches:
+            span = doc[start:end]
+            city = span.text.title()
+            state = self.cities_db.get(city)
+
+            if state:
+                ents.append(Span(doc, start, end, label="CITY"))
+                found_city = city
+                found_state = state
+                print(f"Found city: '{city}' in state: '{state}'")
+                break
+
         
         # If we found a city and don't have state information yet, add the state
         if found_city and not existing_state:

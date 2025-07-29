@@ -36,9 +36,9 @@ class ParsedAddress(BaseModel):
     """Response model for the structured address components."""
     care_of: str | None = None
     house_number: str | None = None
+    sub_locality: str | None = None
     poi: str | None = None
     road: str | None = None
-    sublocality: str | None = None
     locality: str | None = None
     district: str | None = None
     city: str | None = None
@@ -60,6 +60,7 @@ try:
     # Need to import the custom components so spaCy knows about them when loading
     from pincode_centric_parser import PincodeCentricParser
     from cities_state_parser import CitiesStateParser
+    from address_details_parser import AddressDetailsParser
     logging.info(f"Loading model from {settings.model_dir}...")
     nlp = spacy.load(settings.model_dir)
     logging.info("Model loaded successfully.")
@@ -72,7 +73,10 @@ except (OSError, ImportError) as e:
 
 def preprocess_text(text: str) -> str:
     # Split things like Delhi-110095 into Delhi 110095
-    return re.sub(r'([a-zA-Z]+)-(\d{6})', r'\1 \2', text)
+    # Also, replace abc(efg) with abc ( efg )
+    text = re.sub(r'([a-zA-Z]+)-(\d{6})', r'\1 \2', text)
+    text = re.sub(r'(\w+)\s*\(\s*([^)]+?)\s*\)', r'\1 ( \2 )', text)
+    return text
 
 
 # Parse Address Endpoint
@@ -111,7 +115,7 @@ async def parse_address(request: AddressRequest):
         kb_data = doc._.kb_info
         logging.info(f"Enriching response with Knowledge Base data: {kb_data}")
         # Overwrite with Knowledge Base data if available (kb_info takes priority over NER)
-        for key in ['pincode', 'state', 'district', 'locality', 'city']:
+        for key in ['pincode', 'state', 'district', 'locality', 'city', 'care_of', 'house_number', 'road', 'poi', 'sub_locality']:
             if kb_data.get(key):
                 parsed_data[key] = kb_data.get(key)
 

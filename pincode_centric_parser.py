@@ -38,9 +38,11 @@ class PincodeCentricParser:
             
             pincode_db, locality_db = {}, {}
             for pincode, group in df.groupby('pincode'):
+                # Choose the most frequent district for this pincode
+                district = group['district'].mode().iloc[0] if not group['district'].mode().empty else group['district'].iloc[0]
                 pincode_db[pincode] = {
                     "state": group['statename'].iloc[0],
-                    "district": group['district'].iloc[0],
+                    "district": district,
                     "localities": group['officename'].str.strip().unique().tolist()
                 }
             for _, row in df.iterrows():

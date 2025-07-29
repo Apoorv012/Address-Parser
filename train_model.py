@@ -5,6 +5,7 @@ from spacy.training.example import Example
 from pathlib import Path
 from pincode_centric_parser import PincodeCentricParser
 from cities_state_parser import CitiesStateParser
+from address_details_parser import AddressDetailsParser
 from address_csv_converter import build_ner_training_data
 
 
@@ -17,6 +18,7 @@ def build_and_train_hybrid_pipeline(pincode_dataset_path, cities_dataset_path, t
     nlp = spacy.blank("en")
     nlp.add_pipe("pincode_centric_parser", config={"pincode_dataset_path": pincode_dataset_path})
     nlp.add_pipe("cities_state_parser", config={"cities_dataset_path": cities_dataset_path})
+    nlp.add_pipe("address_details_parser")  # Added new parser for road, house_number, care_of, poi
     ner = nlp.add_pipe("ner")
 
     for _, annotations in training_data:

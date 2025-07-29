@@ -33,11 +33,13 @@
   "pipeline":[
     "pincode_centric_parser",
     "cities_state_parser",
+    "address_details_parser",
     "ner"
   ],
   "components":[
     "pincode_centric_parser",
     "cities_state_parser",
+    "address_details_parser",
     "ner"
   ],
   "disabled":[

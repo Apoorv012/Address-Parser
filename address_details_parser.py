@@ -28,13 +28,12 @@ class AddressDetailsParser:
                 kb_info['care_of'] = fallback_match.group(0).strip().rstrip(",.")
 
         # --- house_number ---
-        house_no_match = re.search(
-            r"\b(?:H\.?\s*No\.?|House Number|Flat No\.?|Plot No\.?|#)?\s*[:\-]?\s*([A-Z]?\s*\d+[A-Z]?(?:[-\/]?[A-Z0-9]+)*)",
+        house_number_match = re.search(
+            r"\b(?:H\.?\s*No\.?|House Number|Flat No\.?|Plot No\.?|#)?\s*[:\-]?\s*([A-Z]?\s*[-]?\s*\d+(?:[-\/]?\s*[A-Z0-9]+)*)",
             text, re.IGNORECASE | re.UNICODE
         )
-        if house_no_match:
-            house_number = house_no_match.group(1).strip().replace(" ", "").rstrip(",.")
-            kb_info['house_number'] = house_number
+        if house_number_match:
+            kb_info['house_number'] = house_number_match.group(1).strip().replace("  ", " ")
 
         # --- sub_locality ---
         sub_locality_match = re.search(
@@ -84,12 +83,13 @@ if __name__ == "__main__":
     nlp.add_pipe("address_details_parser")
 
     tests = [
-        "C/O Mr. Sharma, A-31/F1, Pocket B, Shiv Nagar, Near Metro Station",
+        "C/O Mr. Sharma, A-31/F1, Pocket-B, Shiv Nagar, Near Metro Station",
         "7B, Block-A, Krishna Nagar",
         "Mr. Manish Mittal, 180/2, Block-B, Green Nagar, Behind HDFC Bank",
         "House Number 60, Pocket-A, Near ABC Mall"
     ]
 
     for text in tests:
+        print(f"Input: {text}")
         doc = nlp(text)
-        print(f"Input: {text}\nParsed: {doc._.kb_info}\n")
+        print()

@@ -40,6 +40,7 @@ class CitiesStateParser:
             return {}
 
     def __call__(self, doc):
+        print("Starting Cities:", doc._.kb_info)
         ents = []
         
         # Preserve existing kb_info from previous parsers (like pincode parser)

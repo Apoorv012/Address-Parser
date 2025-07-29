@@ -110,12 +110,10 @@ async def parse_address(request: AddressRequest):
     if doc._.kb_info:
         kb_data = doc._.kb_info
         logging.info(f"Enriching response with Knowledge Base data: {kb_data}")
-        # Fill in any fields that were NOT found in the text but are in our DB
-        if not parsed_data.get('pincode'): parsed_data['pincode'] = kb_data.get('pincode')
-        if not parsed_data.get('state'): parsed_data['state'] = kb_data.get('state')
-        if not parsed_data.get('district'): parsed_data['district'] = kb_data.get('district')
-        if not parsed_data.get('locality'): parsed_data['locality'] = kb_data.get('locality')
-        if not parsed_data.get('city'): parsed_data['city'] = kb_data.get('city') 
+        # Overwrite with Knowledge Base data if available (kb_info takes priority over NER)
+        for key in ['pincode', 'state', 'district', 'locality', 'city']:
+            if kb_data.get(key):
+                parsed_data[key] = kb_data.get(key)
 
     logging.info(f"Successfully parsed address. Final Result: {parsed_data}")
     response = ParsedAddress(**parsed_data)

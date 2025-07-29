@@ -18,10 +18,16 @@
   },
   "labels":{
     "ner":[
+      "CITY",
+      "DISTRICT",
       "HOUSE_NUMBER",
       "LOCALITY",
+      "PINCODE",
       "POI",
-      "ROAD"
+      "ROAD",
+      "STATE",
+      "SUBLOCALITY",
+      "SUB_DISTRICT"
     ]
   },
   "pipeline":[

@@ -21,7 +21,7 @@ class AddressDetailsParser:
             kb_info['care_of'] = care_of_match.group(2).strip().rstrip(",.")
         else:
             fallback_match = re.search(
-                r"^\s*(Mr\.?|Mrs\.?|Miss|Ms\.?|Dr\.?)\s+[A-Z][\w.\s]+?(?=[,\n]|$)",
+                r"^\s*(Mr\.?|Mrs\.?|Miss|Ms\.?|Smt\.?|Dr\.?)\s+[A-Z][\w.\s]+?(?=[,\n]|$)",
                 text, re.IGNORECASE | re.UNICODE
             )
             if fallback_match:
@@ -38,7 +38,7 @@ class AddressDetailsParser:
 
         # --- sub_locality ---
         sub_locality_match = re.search(
-            r"\b(Pocket[-\s]?[A-Z]|\bBlock[-\s]?[A-Z]|\w+\sNagar)\b",
+            r"\b(Sector[-\s]?\d+[A-Z]?|Pocket[-\s]?[A-Z]|Block[-\s]?[A-Z]|\w+\s(?:Nagar|Bazar|Bazaar))\b",
             text, re.IGNORECASE | re.UNICODE
         )
         if sub_locality_match:
@@ -54,11 +54,19 @@ class AddressDetailsParser:
 
         # --- poi ---
         poi_match = re.search(
-            r"\b(Near|Opposite|Beside|Behind|Adjacent to|In front of)\s+([^\.,\n]+)",
+            r"\b(Near|Opp\.?|Opposite|Beside|Behind|Adjacent to|In front of)\s+([^\.,\n]+)",
             text, re.IGNORECASE | re.UNICODE
         )
         if poi_match:
             kb_info['poi'] = poi_match.group(2).strip().rstrip(",.")
+        else:
+            # Match names like "Green Heights Apartments", "Palm Grove Villas", etc.
+            named_poi_match = re.search(
+                r"\b([A-Z][\w\s&'-]{2,})\s+(Apartments|Apartment|Layout|Residency|Tower|Heights|Villas|Enclave|Complex|Plaza|Mansion|Arcade|Building|Homes|Court|Garden|Society)\b",
+                text, re.IGNORECASE | re.UNICODE
+            )
+            if named_poi_match:
+                kb_info['poi'] = named_poi_match.group(0).strip().rstrip(",.")
 
         doc._.kb_info = kb_info
         return doc

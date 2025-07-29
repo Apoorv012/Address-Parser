@@ -43,6 +43,14 @@ class AddressDetailsParser:
         if sub_locality_match:
             kb_info['sub_locality'] = sub_locality_match.group(0).strip().rstrip(",.")
 
+        # --- special named sub_locality like 'Green Heights Apartments' ---
+        named_sub_locality_match = re.search(
+            r"\b([A-Z][\w\s&'-]{2,})\s+(Apartments|Apartment|Layout|Residency|Tower|Heights|Villas|Enclave|Complex|Plaza|Mansion|Arcade|Building|Homes|Court|Garden|Society)\b",
+            text, re.IGNORECASE | re.UNICODE
+        )
+        if named_sub_locality_match:
+            kb_info['sub_locality'] = named_sub_locality_match.group(0).strip().rstrip(",.")
+
         # --- road ---
         road_match = re.search(
             r"\b([\w\s]+?)\s+(Road|Rd\.|Street|St\.|Lane|Ln\.|Marg|Avenue|Ave\.|Bypass|Highway|Hwy\.)\b",
@@ -58,14 +66,6 @@ class AddressDetailsParser:
         )
         if poi_match:
             kb_info['poi'] = poi_match.group(2).strip().rstrip(",.")
-        else:
-            # Match names like "Green Heights Apartments", "Palm Grove Villas", etc.
-            named_poi_match = re.search(
-                r"\b([A-Z][\w\s&'-]{2,})\s+(Apartments|Apartment|Layout|Residency|Tower|Heights|Villas|Enclave|Complex|Plaza|Mansion|Arcade|Building|Homes|Court|Garden|Society)\b",
-                text, re.IGNORECASE | re.UNICODE
-            )
-            if named_poi_match:
-                kb_info['poi'] = named_poi_match.group(0).strip().rstrip(",.")
 
         doc._.kb_info = kb_info
         print("Ending AddressDetailsParser with doc._.kb_info:", doc._.kb_info)
@@ -86,7 +86,8 @@ if __name__ == "__main__":
         "C/O Mr. Sharma, A-31/F1, Pocket-B, Shiv Nagar, Near Metro Station",
         "7B, Block-A, Krishna Nagar",
         "Mr. Manish Mittal, 180/2, Block-B, Green Nagar, Behind HDFC Bank",
-        "House Number 60, Pocket-A, Near ABC Mall"
+        "House Number 60, Pocket-A, Near ABC Mall",
+        "Flat 5C, Palm Residency, Opposite SBI ATM, 700032, India"
     ]
 
     for text in tests:

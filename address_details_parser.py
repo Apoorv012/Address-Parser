@@ -69,6 +69,7 @@ class AddressDetailsParser:
                 kb_info['poi'] = named_poi_match.group(0).strip().rstrip(",.")
 
         doc._.kb_info = kb_info
+        print("Ending AddressDetailsParser with doc._.kb_info:", doc._.kb_info)
         return doc
 
 @Language.factory("address_details_parser")

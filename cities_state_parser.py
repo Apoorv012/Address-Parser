@@ -106,7 +106,7 @@ class CitiesStateParser:
                 existing_kb_info['state'] = found_state
             
             doc._.kb_info = existing_kb_info
-            print(f"Updated kb_info: {doc._.kb_info}")
+            print(f"CitiesParser: Updated kb_info: {doc._.kb_info}")
         
         doc.ents = spacy.util.filter_spans(ents)
         return doc

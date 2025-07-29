@@ -14,12 +14,19 @@ def clean_office_name(name):
 
 
 class PincodeCentricParser:
-    def __init__(self, nlp, name, pincode_dataset_path):
+    def __init__(self, nlp, name, pincode_dataset_path=None, pincode_db=None):
         self.name = name
-        self.pincode_db, self.locality_db = self._load_pincode_database(pincode_dataset_path)
+        if pincode_db is not None:
+            print("Using already loaded pincode_db")
+            self.pincode_db = pincode_db
+        elif pincode_dataset_path is not None:
+            self.pincode_db, self.locality_db = self._load_pincode_database(pincode_dataset_path)
+        else:
+            raise ValueError("Must provide either `pincode_db` or pincode_dataset_path")
         if not Doc.has_extension("kb_info"): Doc.set_extension("kb_info", default=None)
 
-    def _load_pincode_database(self, pincode_dataset_path):
+    @staticmethod
+    def _load_pincode_database(pincode_dataset_path):
         print(f"Loading knowledge base from {pincode_dataset_path}...")
         try:
             df = pd.read_csv(pincode_dataset_path, low_memory=False)
@@ -111,47 +118,17 @@ class PincodeCentricParser:
             if found_locality:
                 doc._.kb_info['locality'] = found_locality
 
-        else:
-            # REVERSE LOOKUP LOGIC
-            print("No pincode found. Attempting reverse lookup by locality.")
-            for locality_name, possible_details in self.locality_db.items():
-                if not locality_name: continue # Skip empty locality names
-                for match in re.finditer(r'\b' + re.escape(locality_name) + r'\b', doc.text, re.IGNORECASE):
-                    
-                    if len(possible_details) == 1:
-                        # Unambiguous match, we can be confident.
-                        details = possible_details[0]
-                    else:
-                        # Ambiguous match, look for more clues (district or state).
-                        print(f"Ambiguous locality '{locality_name}' found. Searching for clues...")
-                        details = None
-                        for potential_detail in possible_details:
-                            # Check if the district or state for this potential match is in the text
-                            district_clue = r'\b' + re.escape(potential_detail['district']) + r'\b'
-                            state_clue = r'\b' + re.escape(potential_detail['state']) + r'\b'
-                            if re.search(district_clue, doc.text, re.IGNORECASE) or re.search(state_clue, doc.text, re.IGNORECASE):
-                                print(f"Disambiguated with clue: {potential_detail['district']}/{potential_detail['state']}")
-                                details = potential_detail
-                                break # Found the correct detail
-                    
-                    if details:
-                        print(f"Found known locality: '{locality_name}'. Filling details.")
-                        doc._.kb_info = details
-                        span = doc.char_span(match.start(), match.end(), label="LOCALITY")
-                        if span is not None: ents.append(span)
-                        break # Found a match, stop searching this locality
-                if doc._.kb_info: break # Found a definitive match, stop all searching
-        
+        print("Ending PincodeCentricParser with doc._.kb_info:", doc._.kb_info)
         doc.ents = spacy.util.filter_spans(ents)
         return doc
     
-@Language.factory("pincode_centric_parser", default_config={"pincode_dataset_path": None})
-def create_pincode_parser(nlp: Language, name: str, pincode_dataset_path: str):
+@Language.factory("pincode_centric_parser", default_config={"pincode_dataset_path": None, "pincode_db": None})
+def create_pincode_parser(nlp: Language, name: str, pincode_dataset_path: str = None, pincode_db=None):
     """
     This factory function tells spaCy how to build the PincodeCentricParser component.
     It takes the 'pincode_dataset_path' from the config and passes it to the class.
     """
-    if pincode_dataset_path is None:
-        raise ValueError("The 'pincode_dataset_path' for the pincode parser is not set in the config.")
+    if pincode_dataset_path is None and pincode_db is None:
+        raise ValueError("The 'pincode_dataset_path' or 'pincode_db' for the pincode parser is not set in the config.")
 
-    return PincodeCentricParser(nlp, name, pincode_dataset_path)
+    return PincodeCentricParser(nlp, name, pincode_dataset_path=pincode_dataset_path, pincode_db=pincode_db)

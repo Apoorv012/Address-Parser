@@ -61,6 +61,7 @@ try:
     from pincode_centric_parser import PincodeCentricParser
     from cities_state_parser import CitiesStateParser
     from address_details_parser import AddressDetailsParser
+    from locality_based_parser import LocalityBasedParser
     logging.info(f"Loading model from {settings.model_dir}...")
     nlp = spacy.load(settings.model_dir)
     logging.info("Model loaded successfully.")

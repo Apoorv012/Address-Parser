@@ -6,6 +6,7 @@ from pathlib import Path
 from pincode_centric_parser import PincodeCentricParser
 from cities_state_parser import CitiesStateParser
 from address_details_parser import AddressDetailsParser
+from locality_based_parser import LocalityBasedParser
 from address_csv_converter import build_ner_training_data
 
 
@@ -14,11 +15,15 @@ def build_and_train_hybrid_pipeline(pincode_dataset_path, cities_dataset_path, t
     output_path = Path(output_dir)
     if not output_path.exists():
         output_path.mkdir()
+    
+    # Load and parse pincode dataset ONCE
+    pincode_db, locality_db = PincodeCentricParser._load_pincode_database(PINCODE_DATASET_FILE_PATH)
 
     nlp = spacy.blank("en")
-    nlp.add_pipe("pincode_centric_parser", config={"pincode_dataset_path": pincode_dataset_path})
-    nlp.add_pipe("cities_state_parser", config={"cities_dataset_path": cities_dataset_path})
-    nlp.add_pipe("address_details_parser")  # Added new parser for road, house_number, care_of, poi
+    nlp.add_pipe("pincode_centric_parser", config={"pincode_db": pincode_db})
+    nlp.add_pipe("cities_state_parser", config={"cities_dataset_path": CITIES_DATASET_FILE_PATH})
+    nlp.add_pipe("locality_based_parser", config={"locality_db": locality_db})
+    nlp.add_pipe("address_details_parser")
     ner = nlp.add_pipe("ner")
 
     for _, annotations in training_data:
@@ -47,6 +52,9 @@ def build_and_train_hybrid_pipeline(pincode_dataset_path, cities_dataset_path, t
     print(f"\nHybrid pipeline saved to '{output_path}'")
 
 
+
+
+
 if __name__ == '__main__':
     # --- Configuration ---
     PINCODE_DATASET_FILE_PATH = 'pincode_dataset.csv'
@@ -57,3 +65,4 @@ if __name__ == '__main__':
     NER_TRAIN_DATA = build_ner_training_data(CSV_ADDRESS_PATH)
 
     build_and_train_hybrid_pipeline(PINCODE_DATASET_FILE_PATH, CITIES_DATASET_FILE_PATH, NER_TRAIN_DATA, MODEL_OUTPUT_DIR)
+   

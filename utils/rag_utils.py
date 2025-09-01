@@ -50,6 +50,7 @@ STRICT RULES:
 - Use the exact schema below
 - Only fill/correct values using the raw address and candidates
 - Do not invent pincodes, only pick from candidates
+- Strictly follow the schema
 
 Schema:
 {{

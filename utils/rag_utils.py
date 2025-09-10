@@ -40,15 +40,15 @@ def refine_with_llm(raw_address, parsed_json, candidates, model="mistral"):
     }
 
     prompt = f"""
-You are correcting a parsed Indian address.
+You are parsing Indian address.
 
 Rules:
 - Output must be valid JSON
 - Use the exact schema shown
-- DO NOT change city, state, or pincode (they are already correct)
-- Focus only on correcting/adding houseno, sublocality, poi, locality, and careof
-- Use candidates when possible
 - If unsure, leave a field null
+- Rule based json might be wrong, so correct it according to you
+- If you feel that the address is missing something, check the candidates
+- Do what you feel is best
 
 Schema:
 {{
@@ -65,14 +65,11 @@ Schema:
 Raw Address:
 {raw_address}
 
-Parsed JSON (rule-based):
-{json.dumps(parsed_json, indent=2)}
+Rule-based result:
+{parsed_json}
 
-Candidates (from DB):
-{json.dumps(candidates, indent=2)}
-
-Remember: city, state, and pincode must remain as:
-{json.dumps(locked, indent=2)}
+Candidates:
+{candidates}
 
 Reply ONLY with the corrected JSON.
 """

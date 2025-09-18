@@ -1,2 +1,134 @@
 1.
+Address:  7-B, Pocket C near astha child clinic Sector 24 Rohini Delhi 110085
+Rule-based result:
+{
+        "careof" : "None",
+        "houseno" : "7-B",
+        "poi" : "astha child clinic sector 24",
+        "locality" : "rohini sector 16",
+        "sublocality" : "clinic Sector 24",
+        "city" : "delhi",
+        "state" : "delhi",
+        "pincode" : "110085"
+}
+Candidates:
+{
+        "localities" : "['avantika', 'rohini sector 5', 'rohini courts', 'rohini sec11', 'rohini sector7', 'rithala', 'rohini sector 16', 'prashant vihar']",
+        "city" : "['delhi']",
+        "state" : "['delhi']",
+        "pincode" : "[]"
+}
 
+Corrected by LLM:
+ {
+  "careof": None,
+  "houseno": "7-B",
+  "poi": "astha child clinic sector 24",
+  "locality": "rohini sector 16",
+  "sublocality": "near astha child clinic Sector 24",
+  "city": "delhi",
+  "state": "delhi",
+  "pincode": "110085"
+}
+
+2.
+Address:  45, Lane 3 behind Shyam Mandir near Huda Market, Sector 21 Gurgaon Haryana 122016
+Rule-based result:
+{
+        "careof" : "None",
+        "houseno" : "45",
+        "poi" : "None",
+        "locality" : "industrial complex dundahera",
+        "sublocality" : "Sector 21",
+        "city" : "mandi",
+        "state" : "himachal pradesh",
+        "pincode" : "122016"
+}
+Candidates:
+{
+        "localities" : "['industrial complex dundahera']",
+        "city" : "['mandi']",
+        "state" : "['himachal pradesh']",
+        "pincode" : "[]"
+}
+
+Corrected by LLM:
+ Based on the provided information, the corrected JSON would be:
+
+
+{
+  "careof": None,
+  "houseno": "45",
+  "sublocality": "Sector 21",
+  "poi": None,
+  "locality": "Gurgaon",
+  "city": "Gurgaon",
+  "state": "Haryana",
+  "pincode": "122016"
+}
+
+3.
+Address:  Flat 4B, Palm Residency opposite Metro Pillar 145, near City Mall, MG Road, Bengaluru Karnataka 560001
+Rule-based result:
+{
+        "careof" : "None",
+        "houseno" : "4B",
+        "poi" : "None",
+        "locality" : "vasanthanagar",
+        "sublocality" : "None",
+        "city" : "bengaluru",
+        "state" : "karnataka",
+        "pincode" : "560001"
+}
+Candidates:
+{
+        "localities" : "['vidhana soudha', 'dr. ambedkar veedhi', 'cmm court complex', 'vasanthanagar', 'highcourt', 'bengaluru g.p.o.', 'rajbhavan', 'mahatma gandhi road', 'legislators home']",        
+        "city" : "['bengaluru']",
+        "state" : "['karnataka']",
+        "pincode" : "[]"
+}
+
+Corrected by LLM:
+ {
+  "careof": None,
+  "houseno": "4B",
+  "poi": "Palm Residency opposite Metro Pillar 145",
+  "sublocality": None,
+  "locality": "vasanthanagar",
+  "city": "bengaluru",
+  "state": "karnataka",
+  "pincode": "560001"
+}
+
+4.
+Address:  123, Civil Lines near Allahabad University Gate beside SBI Bank, Allahabad Uttar Pradesh 211001
+Rule-based result:
+{
+        "careof" : "None",
+        "houseno" : "123",
+        "poi" : "None",
+        "locality" : "prayagraj new cantt",
+        "sublocality" : "None",
+        "city" : "prayagraj",
+        "state" : "uttar pradesh",
+        "pincode" : "211001"
+}
+Candidates:
+{
+        "localities" : "['s n marg', 'prayagraj new cantt', 'malaka', 'prayagraj h', 'leader', 'k n marg']",
+        "city" : "[]",
+        "state" : "[]",
+        "pincode" : "[]"
+}
+
+Corrected by LLM:
+ {
+  "careof": None,
+  "houseno": "123",
+  "sublocality": "Civil Lines",
+  "poi": "SBI Bank",
+  "locality": "prayagraj new cantt",
+  "city": "prayagraj",
+  "state": "uttar pradesh",
+  "pincode": "211001"
+}

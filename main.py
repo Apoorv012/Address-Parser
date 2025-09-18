@@ -6,7 +6,7 @@ def pprint_dict(d: dict):
     print("{\n" + ",\n".join([f"\t\"{k}\" : \"{v}\"" for k, v in d.items()]) + "\n}")
 
 if __name__ == "__main__":
-    addr = "7-B, Pocket C, near astha child clinic Sector 24 Rohini, Delhi 110085"
+    addr = "7-B, Pocket C near astha child clinic Sector 24 Rohini Delhi 110085"
 
     parsed = parse_address(addr)
     candidates = get_candidates(parsed, addr)

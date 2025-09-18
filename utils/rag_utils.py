@@ -43,12 +43,11 @@ def refine_with_llm(raw_address, parsed_json, candidates, model="mistral"):
 You are parsing Indian address.
 
 Rules:
-- Output must be valid JSON
+- Output must be valid JSON, and should only be JSON, nothing else
 - Use the exact schema shown
 - If unsure, leave a field null
-- Rule based json might be wrong, so correct it according to you
-- If you feel that the address is missing something, check the candidates
-- Do what you feel is best
+- You may use the information from rule based result, or candidates
+- Try not to use same details in multiple fields
 
 Schema:
 {{

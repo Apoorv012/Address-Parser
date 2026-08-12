@@ -83,9 +83,14 @@ def score(test_set, predict_fn):
     total_fields_expected = 0
     details = []
 
-    for item in test_set:
+    for i, item in enumerate(test_set):
         expected = item["expected"]
-        predicted, meta = predict_fn(item["raw_address"])
+        print(f"[{i+1}/{len(test_set)}] {item['id']} ({item['style']})", file=sys.stderr)
+        try:
+            predicted, meta = predict_fn(item["raw_address"])
+        except Exception as e:
+            print(f"  [ERROR] {item['id']}: {e!r} -- scoring as all-null and continuing", file=sys.stderr)
+            predicted, meta = {f: None for f in FIELDS}, {"error": repr(e)}
 
         style = item["style"]
         per_style.setdefault(style, {"correct": 0, "total": 0, "exact": 0, "n": 0})

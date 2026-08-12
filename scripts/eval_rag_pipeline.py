@@ -15,7 +15,9 @@ mixed_order).
 import argparse
 import json
 import re
+import statistics
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -90,16 +92,20 @@ def score(test_set, predict_fn):
     exact_matches = 0
     total_fields_correct = 0
     total_fields_expected = 0
+    latencies = []
     details = []
 
     for i, item in enumerate(test_set):
         expected = item["expected"]
         print(f"[{i+1}/{len(test_set)}] {item['id']} ({item['style']})", file=sys.stderr)
+        start = time.perf_counter()
         try:
             predicted, meta = predict_fn(item["raw_address"])
         except Exception as e:
             print(f"  [ERROR] {item['id']}: {e!r} -- scoring as all-null and continuing", file=sys.stderr)
             predicted, meta = {f: None for f in FIELDS}, {"error": repr(e)}
+        latency = time.perf_counter() - start
+        latencies.append(latency)
 
         style = item["style"]
         per_style.setdefault(style, {"correct": 0, "total": 0, "exact": 0, "n": 0})
@@ -140,6 +146,7 @@ def score(test_set, predict_fn):
             "predicted": predicted,
             "field_accuracy": round(row_correct / row_total, 3) if row_total else None,
             "exact_match": all_ok,
+            "latency_seconds": round(latency, 4),
             "meta": meta,
         })
 
@@ -160,6 +167,13 @@ def score(test_set, predict_fn):
             }
             for s, v in per_style.items()
         },
+        "latency_seconds": {
+            "total": round(sum(latencies), 3),
+            "mean": round(statistics.mean(latencies), 3) if latencies else None,
+            "median": round(statistics.median(latencies), 3) if latencies else None,
+            "min": round(min(latencies), 3) if latencies else None,
+            "max": round(max(latencies), 3) if latencies else None,
+        },
     }
     return summary, details
 
@@ -175,6 +189,8 @@ def print_report(title, summary):
     print("Per-style accuracy (field-level):")
     for s, v in summary["per_style_accuracy"].items():
         print(f"  {s:16s} field={v['field_level']:.1%}  exact={v['exact_match']:.1%}  n={v['n']}")
+    lat = summary["latency_seconds"]
+    print(f"Latency per address (s): mean={lat['mean']}  median={lat['median']}  min={lat['min']}  max={lat['max']}  total={lat['total']}")
 
 
 def main():

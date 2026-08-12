@@ -38,6 +38,13 @@
         "exact_match": 0.0,
         "n": 5
       }
+    },
+    "latency_seconds": {
+      "total": 1.592,
+      "mean": 0.05,
+      "median": 0.048,
+      "min": 0.042,
+      "max": 0.078
     }
   },
   "details": [
@@ -65,6 +72,7 @@
       },
       "field_accuracy": 0.8,
       "exact_match": false,
+      "latency_seconds": 0.0436,
       "meta": {
         "careof": null,
         "houseno": "110019",
@@ -100,6 +108,7 @@
       },
       "field_accuracy": 0.333,
       "exact_match": false,
+      "latency_seconds": 0.0435,
       "meta": {
         "careof": null,
         "houseno": "420",
@@ -135,6 +144,7 @@
       },
       "field_accuracy": 0.333,
       "exact_match": false,
+      "latency_seconds": 0.0443,
       "meta": {
         "careof": null,
         "houseno": "465",
@@ -170,6 +180,7 @@
       },
       "field_accuracy": 0.667,
       "exact_match": false,
+      "latency_seconds": 0.0446,
       "meta": {
         "careof": null,
         "houseno": "110029",
@@ -205,6 +216,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0481,
       "meta": {
         "careof": null,
         "houseno": "600042",
@@ -240,6 +252,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0474,
       "meta": {
         "careof": null,
         "houseno": "501218",
@@ -275,6 +288,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0517,
       "meta": {
         "careof": null,
         "houseno": "624101",
@@ -310,6 +324,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0417,
       "meta": {
         "careof": null,
         "houseno": "110037",
@@ -345,6 +360,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0426,
       "meta": {
         "careof": null,
         "houseno": "7",
@@ -380,6 +396,7 @@
       },
       "field_accuracy": 0.667,
       "exact_match": false,
+      "latency_seconds": 0.0453,
       "meta": {
         "careof": null,
         "houseno": "155",
@@ -415,6 +432,7 @@
       },
       "field_accuracy": 0.333,
       "exact_match": false,
+      "latency_seconds": 0.0472,
       "meta": {
         "careof": null,
         "houseno": "68B",
@@ -450,6 +468,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0423,
       "meta": {
         "careof": null,
         "houseno": "428/435",
@@ -485,6 +504,7 @@
       },
       "field_accuracy": 0.833,
       "exact_match": false,
+      "latency_seconds": 0.0524,
       "meta": {
         "careof": null,
         "houseno": "472",
@@ -520,6 +540,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0516,
       "meta": {
         "careof": null,
         "houseno": "7-20/54",
@@ -555,6 +576,7 @@
       },
       "field_accuracy": 0.333,
       "exact_match": false,
+      "latency_seconds": 0.0423,
       "meta": {
         "careof": null,
         "houseno": "105",
@@ -590,6 +612,7 @@
       },
       "field_accuracy": 1.0,
       "exact_match": true,
+      "latency_seconds": 0.0527,
       "meta": {
         "careof": null,
         "houseno": "128/599",
@@ -625,6 +648,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0447,
       "meta": {
         "careof": null,
         "houseno": "110017",
@@ -660,6 +684,7 @@
       },
       "field_accuracy": 1.0,
       "exact_match": false,
+      "latency_seconds": 0.0508,
       "meta": {
         "careof": null,
         "houseno": "201013",
@@ -695,6 +720,7 @@
       },
       "field_accuracy": 0.2,
       "exact_match": false,
+      "latency_seconds": 0.0417,
       "meta": {
         "careof": null,
         "houseno": "143006",
@@ -730,6 +756,7 @@
       },
       "field_accuracy": 0.75,
       "exact_match": false,
+      "latency_seconds": 0.0509,
       "meta": {
         "careof": null,
         "houseno": "201009",
@@ -765,6 +792,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0471,
       "meta": {
         "careof": null,
         "houseno": "38",
@@ -800,6 +828,7 @@
       },
       "field_accuracy": 0.2,
       "exact_match": false,
+      "latency_seconds": 0.0419,
       "meta": {
         "careof": null,
         "houseno": "208001",
@@ -835,6 +864,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0783,
       "meta": {
         "careof": null,
         "houseno": "411006",
@@ -870,6 +900,7 @@
       },
       "field_accuracy": 0.4,
       "exact_match": false,
+      "latency_seconds": 0.0493,
       "meta": {
         "careof": null,
         "houseno": "382428",
@@ -905,6 +936,7 @@
       },
       "field_accuracy": 0.4,
       "exact_match": false,
+      "latency_seconds": 0.0597,
       "meta": {
         "careof": null,
         "houseno": "144001",
@@ -940,6 +972,7 @@
       },
       "field_accuracy": 0.8,
       "exact_match": false,
+      "latency_seconds": 0.0516,
       "meta": {
         "careof": null,
         "houseno": "560300",
@@ -975,6 +1008,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0729,
       "meta": {
         "careof": null,
         "houseno": "400050",
@@ -1010,6 +1044,7 @@
       },
       "field_accuracy": 0.8,
       "exact_match": false,
+      "latency_seconds": 0.0536,
       "meta": {
         "careof": null,
         "houseno": "211013",
@@ -1045,6 +1080,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0532,
       "meta": {
         "careof": null,
         "houseno": "1st",
@@ -1080,6 +1116,7 @@
       },
       "field_accuracy": 0.667,
       "exact_match": false,
+      "latency_seconds": 0.0547,
       "meta": {
         "careof": null,
         "houseno": "560038",
@@ -1115,6 +1152,7 @@
       },
       "field_accuracy": 0.6,
       "exact_match": false,
+      "latency_seconds": 0.0473,
       "meta": {
         "careof": null,
         "houseno": "125001",
@@ -1150,6 +1188,7 @@
       },
       "field_accuracy": 0.5,
       "exact_match": false,
+      "latency_seconds": 0.0531,
       "meta": {
         "careof": null,
         "houseno": "201305",

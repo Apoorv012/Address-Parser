@@ -1,5 +1,6 @@
 import subprocess
 import json
+import re
 from utils.lookup_utils import lookup_pincode_info, lookup_city_state
 
 def get_candidates(parsed_json, address):
@@ -80,3 +81,25 @@ Reply ONLY with the corrected JSON.
     )
 
     return result.stdout.decode("utf-8")
+
+
+def extract_json_from_llm_output(raw_output: str) -> dict | None:
+    """
+    Ollama's raw output is often not strict JSON: it wraps the object in prose
+    ("Based on the provided information...") and uses Python literals (None/True/False)
+    instead of JSON ones. This pulls out the first {...} block and normalizes it so
+    json.loads succeeds on what main.py's bare json.loads would otherwise reject.
+    """
+    match = re.search(r"\{.*\}", raw_output, re.DOTALL)
+    if not match:
+        return None
+
+    candidate = match.group(0)
+    candidate = re.sub(r"\bNone\b", "null", candidate)
+    candidate = re.sub(r"\bTrue\b", "true", candidate)
+    candidate = re.sub(r"\bFalse\b", "false", candidate)
+
+    try:
+        return json.loads(candidate)
+    except json.JSONDecodeError:
+        return None

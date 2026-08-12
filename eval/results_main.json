@@ -1,0 +1,845 @@
+{
+  "summary": {
+    "n_addresses": 32,
+    "field_level_accuracy": 0.7225,
+    "exact_match_accuracy": 0.0625,
+    "per_field_accuracy": {
+      "house_number": 0.9091,
+      "sublocality": 0.4444,
+      "poi": 0.3125,
+      "locality": 0.3125,
+      "city": 0.875,
+      "state": 1.0,
+      "pincode": 1.0
+    },
+    "per_style_accuracy": {
+      "comma": {
+        "field_level": 0.6667,
+        "exact_match": 0.0,
+        "n": 8
+      },
+      "no_comma": {
+        "field_level": 0.7021,
+        "exact_match": 0.125,
+        "n": 8
+      },
+      "missing_fields": {
+        "field_level": 0.6786,
+        "exact_match": 0.0,
+        "n": 6
+      },
+      "poi_phrase": {
+        "field_level": 0.9231,
+        "exact_match": 0.0,
+        "n": 5
+      },
+      "mixed_order": {
+        "field_level": 0.7037,
+        "exact_match": 0.2,
+        "n": 5
+      }
+    }
+  },
+  "details": [
+    {
+      "id": "comma_1",
+      "style": "comma",
+      "raw_address": "Nehru Place, New Delhi, Delhi, 110019, Brij Lakshmi Developers Pvt Ltd",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Brij Lakshmi Developers Pvt Ltd",
+        "locality": "Nehru Place",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110019"
+      },
+      "predicted": {
+        "house_number": "110019",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Nehru Place",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110019"
+      },
+      "field_accuracy": 0.8,
+      "exact_match": false
+    },
+    {
+      "id": "comma_2",
+      "style": "comma",
+      "raw_address": "420, Gayatri Bhavan Road, Shastri Nagar, Thyagarajanagar, Bengaluru, Karnataka, 560070",
+      "expected": {
+        "house_number": "420",
+        "sublocality": "Shastri Nagar",
+        "poi": null,
+        "locality": "Thyagarajanagar",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560070"
+      },
+      "predicted": {
+        "house_number": "420",
+        "sublocality": "Shastri Nagar",
+        "poi": null,
+        "locality": null,
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560070"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "comma_3",
+      "style": "comma",
+      "raw_address": "465, 1st Cross Road, New Tharagupete, Chamarajpet, Bengaluru, Karnataka, 560018",
+      "expected": {
+        "house_number": "465",
+        "sublocality": "New Tharagupete",
+        "poi": null,
+        "locality": "Chamarajpet",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560018"
+      },
+      "predicted": {
+        "house_number": "465",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560018"
+      },
+      "field_accuracy": 0.667,
+      "exact_match": false
+    },
+    {
+      "id": "comma_4",
+      "style": "comma",
+      "raw_address": "All India Institute of Medical Sciences, Ansari Nagar East, New Delhi, Delhi, 110029, National Medical Library Gate",
+      "expected": {
+        "house_number": null,
+        "sublocality": "All India Institute of Medical Sciences",
+        "poi": "National Medical Library Gate",
+        "locality": "Ansari Nagar East",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110029"
+      },
+      "predicted": {
+        "house_number": "110029",
+        "sublocality": "Ansari Nagar",
+        "poi": null,
+        "locality": "Ansari Nagar",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110029"
+      },
+      "field_accuracy": 0.667,
+      "exact_match": false
+    },
+    {
+      "id": "comma_5",
+      "style": "comma",
+      "raw_address": "Phoenix Market City Street, Nehru Nagar, Velachery, Chennai, Tamil Nadu, 600042, Label Ritu Kumar",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Nehru Nagar",
+        "poi": "Label Ritu Kumar",
+        "locality": "Velachery",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pincode": "600042"
+      },
+      "predicted": {
+        "house_number": "600042",
+        "sublocality": "Nehru Nagar",
+        "poi": null,
+        "locality": "Velacheri",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pincode": "600042"
+      },
+      "field_accuracy": 0.667,
+      "exact_match": false
+    },
+    {
+      "id": "comma_6",
+      "style": "comma",
+      "raw_address": "Novotel Hyderabad Airport Entry Road, Mamidipally, Hyderabad, Telangana, 501218, Swimming Pool Novotel Hyderabad Airport Hotel",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Swimming Pool Novotel Hyderabad Airport Hotel",
+        "locality": "Mamidipally",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pincode": "501218"
+      },
+      "predicted": {
+        "house_number": "501218",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pincode": "501218"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "comma_7",
+      "style": "comma",
+      "raw_address": "Mother Teresa Womens University, Kodaikanal, Tamil Nadu, 624101, Department of Education",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Department of Education",
+        "locality": "Mother Teresa Womens University",
+        "city": "Kodaikanal",
+        "state": "Tamil Nadu",
+        "pincode": "624101"
+      },
+      "predicted": {
+        "house_number": "624101",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Kodaikanal",
+        "city": "Kodaikanal",
+        "state": "Tamil Nadu",
+        "pincode": "624101"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "comma_8",
+      "style": "comma",
+      "raw_address": "Worldmark, Delhi Aerocity, New Delhi, Delhi, 110037, Shaze",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Worldmark",
+        "poi": "Shaze",
+        "locality": "Delhi Aerocity",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110037"
+      },
+      "predicted": {
+        "house_number": "110037",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": "Delhi",
+        "state": "Delhi",
+        "pincode": "110037"
+      },
+      "field_accuracy": 0.5,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_1",
+      "style": "no_comma",
+      "raw_address": "Pocket 7 Sector 23 B Dwarka New Delhi Delhi 110077 OYO Hotel",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Pocket 7",
+        "poi": "OYO Hotel",
+        "locality": "Sector 23 B Dwarka",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110077"
+      },
+      "predicted": {
+        "house_number": "7 Sector 23 B Dwarka New Delhi Delhi 110077 OYO Hotel",
+        "sublocality": "Sector 23",
+        "poi": null,
+        "locality": null,
+        "city": "Dwarka",
+        "state": "Delhi",
+        "pincode": "110077"
+      },
+      "field_accuracy": 0.333,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_2",
+      "style": "no_comma",
+      "raw_address": "155 3rd Cross Road HVR Layout Vijaya Nagar North Bengaluru Karnataka 560079",
+      "expected": {
+        "house_number": "155",
+        "sublocality": "HVR Layout",
+        "poi": null,
+        "locality": "Vijaya Nagar North",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560079"
+      },
+      "predicted": {
+        "house_number": "155 3rd Cross Road HVR Layout Vijaya Nagar North Bengaluru Karnataka 560079",
+        "sublocality": "Cross Road HVR Layout",
+        "poi": null,
+        "locality": null,
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560079"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_3",
+      "style": "no_comma",
+      "raw_address": "68B Yohiyar Nagar Pykara Madurai Tamil Nadu 625004",
+      "expected": {
+        "house_number": "68B",
+        "sublocality": "Yohiyar Nagar",
+        "poi": null,
+        "locality": "Pykara",
+        "city": "Madurai",
+        "state": "Tamil Nadu",
+        "pincode": "625004"
+      },
+      "predicted": {
+        "house_number": "68B Yohiyar Nagar Pykara Madurai Tamil Nadu 625004",
+        "sublocality": "Yohiyar Nagar",
+        "poi": null,
+        "locality": "Pasumalai",
+        "city": "Madurai",
+        "state": "Tamil Nadu",
+        "pincode": "625004"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_4",
+      "style": "no_comma",
+      "raw_address": "428/435 Dr Sulabha D Bhatavadekar Marg Matunga East Mumbai Maharashtra 400019",
+      "expected": {
+        "house_number": "428/435",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Matunga East",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400019"
+      },
+      "predicted": {
+        "house_number": "428/435 Dr Sulabha D Bhatavadekar Marg Matunga East Mumbai Maharashtra 400019",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Matunga",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400019"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": true
+    },
+    {
+      "id": "no_comma_5",
+      "style": "no_comma",
+      "raw_address": "472 Sector 11 Pratap Vihar Ghaziabad Uttar Pradesh 201009",
+      "expected": {
+        "house_number": "472",
+        "sublocality": "Sector 11",
+        "poi": null,
+        "locality": "Pratap Vihar",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201009"
+      },
+      "predicted": {
+        "house_number": "472 Sector 11 Pratap Vihar Ghaziabad Uttar Pradesh 201009",
+        "sublocality": "Sector 11",
+        "poi": null,
+        "locality": null,
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201009"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_6",
+      "style": "no_comma",
+      "raw_address": "7-20/54 Teachers Colony Tirumalagiri Secunderabad Telangana 500015",
+      "expected": {
+        "house_number": "7-20/54",
+        "sublocality": "Teachers Colony",
+        "poi": null,
+        "locality": "Tirumalagiri",
+        "city": "Secunderabad",
+        "state": "Telangana",
+        "pincode": "500015"
+      },
+      "predicted": {
+        "house_number": "7-20/54 Teachers Colony Tirumalagiri Secunderabad Telangana 500015",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": null,
+        "state": "Telangana",
+        "pincode": "500015"
+      },
+      "field_accuracy": 0.5,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_7",
+      "style": "no_comma",
+      "raw_address": "105 Road Number 6G Solapur Compound 2 Udhana Surat Gujarat 394210",
+      "expected": {
+        "house_number": "105",
+        "sublocality": "Solapur Compound 2",
+        "poi": null,
+        "locality": "Udhana",
+        "city": "Surat",
+        "state": "Gujarat",
+        "pincode": "394210"
+      },
+      "predicted": {
+        "house_number": "105 Road Number 6G Solapur Compound 2 Udhana Surat Gujarat 394210",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": "Solapur",
+        "state": "Gujarat",
+        "pincode": "394210"
+      },
+      "field_accuracy": 0.5,
+      "exact_match": false
+    },
+    {
+      "id": "no_comma_8",
+      "style": "no_comma",
+      "raw_address": "128/599 Block K Kidwai Nagar Kanpur Uttar Pradesh 208011",
+      "expected": {
+        "house_number": "128/599",
+        "sublocality": "Block K",
+        "poi": null,
+        "locality": "Kidwai Nagar",
+        "city": "Kanpur",
+        "state": "Uttar Pradesh",
+        "pincode": "208011"
+      },
+      "predicted": {
+        "house_number": "128/599 Block K Kidwai Nagar Kanpur Uttar Pradesh 208011",
+        "sublocality": "Block K",
+        "poi": null,
+        "locality": null,
+        "city": "Kanpur",
+        "state": "Uttar Pradesh",
+        "pincode": "208011"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_1",
+      "style": "missing_fields",
+      "raw_address": "Maharishi Dayanand Marg, Corner Market, Malviya Nagar, New Delhi, Delhi, 110017",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Corner Market",
+        "poi": null,
+        "locality": "Malviya Nagar",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110017"
+      },
+      "predicted": {
+        "house_number": "110017",
+        "sublocality": "Malviya Nagar",
+        "poi": null,
+        "locality": null,
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110017"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_2",
+      "style": "missing_fields",
+      "raw_address": "Govindpuram, Ghaziabad, Uttar Pradesh, 201013",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": null,
+        "locality": "Govindpuram",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201013"
+      },
+      "predicted": {
+        "house_number": "201013",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Govindpuram",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201013"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_3",
+      "style": "missing_fields",
+      "raw_address": "Rajinder Nagar New Partap Avenue, Amritsar, Punjab, 143006, Hyatt Regency Amritsar Gate",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Hyatt Regency Amritsar Gate",
+        "locality": "Rajinder Nagar New Partap Avenue",
+        "city": "Amritsar",
+        "state": "Punjab",
+        "pincode": "143006"
+      },
+      "predicted": {
+        "house_number": "143006",
+        "sublocality": "Rajinder Nagar",
+        "poi": null,
+        "locality": null,
+        "city": "Amritsar",
+        "state": "Punjab",
+        "pincode": "143006"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_4",
+      "style": "missing_fields",
+      "raw_address": "Pratap Vihar, Ghaziabad, Uttar Pradesh, 201009",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": null,
+        "locality": "Pratap Vihar",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201009"
+      },
+      "predicted": {
+        "house_number": "201009",
+        "sublocality": null,
+        "poi": null,
+        "locality": null,
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "pincode": "201009"
+      },
+      "field_accuracy": 0.75,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_5",
+      "style": "missing_fields",
+      "raw_address": "Main Kanjhawala Road, Rajiv Nagar, Rohini Sector 38, New Delhi, Delhi, 110086",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Rajiv Nagar",
+        "poi": null,
+        "locality": "Rohini Sector 38",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110086"
+      },
+      "predicted": {
+        "house_number": "38",
+        "sublocality": "Rajiv Nagar",
+        "poi": null,
+        "locality": null,
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pincode": "110086"
+      },
+      "field_accuracy": 0.8,
+      "exact_match": false
+    },
+    {
+      "id": "missing_fields_6",
+      "style": "missing_fields",
+      "raw_address": "Talak Mahal, Karnal Ganj, Kanpur, Uttar Pradesh, 208001",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Talak Mahal",
+        "poi": null,
+        "locality": "Karnal Ganj",
+        "city": "Kanpur",
+        "state": "Uttar Pradesh",
+        "pincode": "208001"
+      },
+      "predicted": {
+        "house_number": "208001",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Kanpur",
+        "city": "Karnal",
+        "state": "Uttar Pradesh",
+        "pincode": "208001"
+      },
+      "field_accuracy": 0.4,
+      "exact_match": false
+    },
+    {
+      "id": "poi_phrase_1",
+      "style": "poi_phrase",
+      "raw_address": "North Road, Ishanya, beside Wicked China Pune Yerwada, Yerwada, Pune, Maharashtra, 411006",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Ishanya",
+        "poi": "Wicked China Pune Yerwada",
+        "locality": "Yerwada",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411006"
+      },
+      "predicted": {
+        "house_number": "411006",
+        "sublocality": null,
+        "poi": "Wicked China Pune Yerwada",
+        "locality": "Yerwada",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411006"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "poi_phrase_2",
+      "style": "poi_phrase",
+      "raw_address": "near Sabarmati Gas CNG Station, Bhat, Gandhinagar, Gujarat, 382428",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Sabarmati Gas CNG Station",
+        "locality": "Bhat",
+        "city": "Gandhinagar",
+        "state": "Gujarat",
+        "pincode": "382428"
+      },
+      "predicted": {
+        "house_number": "382428",
+        "sublocality": null,
+        "poi": "Sabarmati Gas CNG Station",
+        "locality": "Bhat",
+        "city": "Gandhinagar",
+        "state": "Gujarat",
+        "pincode": "382428"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": false
+    },
+    {
+      "id": "poi_phrase_3",
+      "style": "poi_phrase",
+      "raw_address": "near Saphire, Modern Nagar, Jalandhar, Punjab, 144001",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Saphire",
+        "locality": "Modern Nagar",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144001"
+      },
+      "predicted": {
+        "house_number": "144001",
+        "sublocality": "Modern Nagar",
+        "poi": "Saphire",
+        "locality": null,
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144001"
+      },
+      "field_accuracy": 0.8,
+      "exact_match": false
+    },
+    {
+      "id": "poi_phrase_4",
+      "style": "poi_phrase",
+      "raw_address": "opposite Dalkomi, Kempegowda International Airport Devanahalli, Bengaluru, Karnataka, 560300",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Dalkomi",
+        "locality": "Kempegowda International Airport Devanahalli",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560300"
+      },
+      "predicted": {
+        "house_number": "560300",
+        "sublocality": null,
+        "poi": "Dalkomi",
+        "locality": "Kempegowda International Airport",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560300"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": false
+    },
+    {
+      "id": "poi_phrase_5",
+      "style": "poi_phrase",
+      "raw_address": "Waterfield Road, near Marks & Spencer, Bandra West, Mumbai, Maharashtra, 400050",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "Marks & Spencer",
+        "locality": "Bandra West",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400050"
+      },
+      "predicted": {
+        "house_number": "400050",
+        "sublocality": null,
+        "poi": "Marks & Spencer",
+        "locality": "Bandra West",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pincode": "400050"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": false
+    },
+    {
+      "id": "mixed_order_1",
+      "style": "mixed_order",
+      "raw_address": "Prayagraj, Uttar Pradesh, Phaphamau, E41, 211013",
+      "expected": {
+        "house_number": "E41",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Phaphamau",
+        "city": "Prayagraj",
+        "state": "Uttar Pradesh",
+        "pincode": "211013"
+      },
+      "predicted": {
+        "house_number": "E41",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Phaphamau",
+        "city": "Prayagraj",
+        "state": "Uttar Pradesh",
+        "pincode": "211013"
+      },
+      "field_accuracy": 1.0,
+      "exact_match": true
+    },
+    {
+      "id": "mixed_order_2",
+      "style": "mixed_order",
+      "raw_address": "Chennai, Tamil Nadu, Velachery, 1st Cross Street, 205/13A, 600042",
+      "expected": {
+        "house_number": "205/13A",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Velachery",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pincode": "600042"
+      },
+      "predicted": {
+        "house_number": "1st Cross Street",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Velacheri",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "pincode": "600042"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "mixed_order_3",
+      "style": "mixed_order",
+      "raw_address": "Bengaluru, Karnataka, Indiranagar, Hoysala Nagar, Jaquar, 560038",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Hoysala Nagar",
+        "poi": "Jaquar",
+        "locality": "Indiranagar",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560038"
+      },
+      "predicted": {
+        "house_number": "560038",
+        "sublocality": "Hoysala Nagar",
+        "poi": null,
+        "locality": "Indiranagar S.O (Bengaluru)",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560038"
+      },
+      "field_accuracy": 0.833,
+      "exact_match": false
+    },
+    {
+      "id": "mixed_order_4",
+      "style": "mixed_order",
+      "raw_address": "Hisar, Haryana, Guru Jambeshwar University of Science & Technology, GJUST Administration Block, 125001",
+      "expected": {
+        "house_number": null,
+        "sublocality": null,
+        "poi": "GJUST Administration Block",
+        "locality": "Guru Jambeshwar University of Science & Technology",
+        "city": "Hisar",
+        "state": "Haryana",
+        "pincode": "125001"
+      },
+      "predicted": {
+        "house_number": "125001",
+        "sublocality": null,
+        "poi": null,
+        "locality": "Hisar",
+        "city": "Hisar",
+        "state": "Haryana",
+        "pincode": "125001"
+      },
+      "field_accuracy": 0.6,
+      "exact_match": false
+    },
+    {
+      "id": "mixed_order_5",
+      "style": "mixed_order",
+      "raw_address": "Noida, Uttar Pradesh, Noida Special Economic Zone, Block JC, SDF Block C and B Gate, 201305",
+      "expected": {
+        "house_number": null,
+        "sublocality": "Block JC",
+        "poi": "SDF Block C and B Gate",
+        "locality": "Noida Special Economic Zone",
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "pincode": "201305"
+      },
+      "predicted": {
+        "house_number": "201305",
+        "sublocality": "Block C",
+        "poi": null,
+        "locality": null,
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "pincode": "201305"
+      },
+      "field_accuracy": 0.5,
+      "exact_match": false
+    }
+  ]
+}
